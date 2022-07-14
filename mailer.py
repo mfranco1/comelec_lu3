@@ -42,7 +42,7 @@ class Candidate:
 class Message:
     def __init__(self, candidate: Candidate) -> None:
         self.candidate = candidate
-        self.response_url = "https://bit.ly/3CP4b9z"
+        self.response_url = "https://bit.ly/2026candidates2223"
 
 
 class TextMessage(Message):
@@ -50,7 +50,7 @@ class TextMessage(Message):
         super().__init__(candidate=candidate)
         self.body = (
             f"Congratulations {candidate.name}! You've been nominated "
-            f"for the following positions {candidate.positions} for A.Y. 2021 - 2022.\n\n"
+            f"for the following positions {candidate.positions} for A.Y. 2022 - 2023.\n\n"
             f"If you wish to pursue candidacy please click the following link:\n"
             f"{self.response_url}"
         )
@@ -88,7 +88,7 @@ class Email:
         self.message["To"] = candidate.email_addr
 
     def format_subject(self) -> str:
-        subject = "Nomination for LU3"
+        subject = "Nomination for LU4"
         if self.candidate.nominations > 1:
             return f"{subject} Multiple Positions"
         return f"{subject} {self.candidate.positions[0]}"
@@ -142,7 +142,7 @@ def build_message(candidate: Candidate) -> MIMEMultipart:
 def main():
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL("smtp.gmail.com", port=465, context=context) as server:
-        server.login(user=comelec_username, password=os.getenv("COMELEC_PASSWORD"))
+        server.login(user=comelec_username, password=os.getenv("APP_PASSWORD"))
         for recipient in get_recipients():
             print(recipient)
             message = build_message(candidate=recipient)
